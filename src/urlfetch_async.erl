@@ -30,7 +30,6 @@ fetch(_) ->
 process_record(Record) ->
     urlfetch_cache:store(Record).
  
-
 get_result(Id) ->
     urlfetch_cache:fetch(Id).
 
@@ -55,10 +54,6 @@ fetch(Id, Url, Method, Payload, Headers, Retry, Sleep) when Retry > 0 ->
         _ ->
             Request = {Url, Headers}
     end,
-% I move this part of code into public fetch method, such that
-% we created record in cache before spawning the fetch process
-%    Record = #cache{id=Id, timestamp=urlfetch_utils:timestamp()},
-%    process_record(Record),
     HTTPOptions = http_options(),
     Options = [{sync, false}, {stream, self}],
     error_logger:info_msg("https:request(~p, ~p, ~p, ~p)~n",
@@ -101,13 +96,6 @@ receive_chunk(Id, ReqId) ->
         {http, {ReqId, Result}} -> 
             {error, Result};
         {http, {ReqId, stream_start, _Headers}} ->
-%        {http, {ReqId, stream_start, Headers}} ->
-%            EncodedHeaders = list_to_binary(
-%                urlfetch_http:encode_headers(Headers) ++ "\n\n"),
-%            Record = #cache{
-%                id=Id, data=EncodedHeaders,
-%                timestamp=urlfetch_utils:timestamp()},
-%            process_record(Record),
             receive_chunk(Id, ReqId);
         {http, {ReqId, stream, Data}} ->
             Record = #cache{
