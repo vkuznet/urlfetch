@@ -1,3 +1,7 @@
+%% -*- mode: erlang -*-
+%% Original author: Tobias Rodäbel
+%% Maintainer: Valentin Kuznetsov
+
 -module(urlfetch_http).
 -export([encode_headers/1, decode_headers/1]).
 -ifdef(TEST).

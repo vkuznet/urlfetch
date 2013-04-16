@@ -1,3 +1,7 @@
+%% -*- mode: erlang -*-
+%% Original author: Tobias Rodäbel
+%% Maintainer: Valentin Kuznetsov
+
 -module(urlfetch_uuid).
 -behaviour(gen_server).
 

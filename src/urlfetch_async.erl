@@ -1,4 +1,11 @@
 %% -*- mode: erlang -*-
+%% Original author: Tobias Rodäbel
+%% Maintainer: Valentin Kuznetsov
+%% Modifications:
+%% - change fetch interface to record UUID before spawn call
+%% - add support for HTTPs options (via user credential or proxy certificate)
+%% - drop storage of HTTP headers into cache record
+
 -module(urlfetch_async).
 -export([fetch/1, fetch/7, process_record/1, get_result/1, purge/1]).
 

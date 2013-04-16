@@ -1,3 +1,7 @@
+%% @author Valenti Kuznetsov <vkuznet@gmail.com>
+%% @copyright 2013 Valentin Kuznetsov.
+%% @doc urlfetch_worker
+
 -module(urlfetch_worker).
 -export([process_request/1]).
 

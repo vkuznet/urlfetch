@@ -1,4 +1,9 @@
 %% -*- mode: erlang -*-
+%% Original author: Tobias Rodäbel
+%% Maintainer: Valentin Kuznetsov
+%% Modifications:
+%% - change interface to gen_server behavior
+
 -module(urlfetch_cache).
 -behaviour(gen_server).
 
