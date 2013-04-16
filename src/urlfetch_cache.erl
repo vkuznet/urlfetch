@@ -88,21 +88,27 @@ store(Table, Record) ->
     Complete  = Record#cache.complete,
     Timestamp = Record#cache.timestamp,
 
-    error_logger:info_msg("~p Inserting data for ~p.~n", [self(), Id]),
+%    error_logger:info_msg("~p Inserting data for ~p.~n", [self(), Id]),
 
     case ets:match(Table, {Id, '$1', '$2', false, '$3'}) of
         [] ->
-            ets:insert(Table, {Id, Status, Data, false, Timestamp});
+            ets:insert(Table, {Id, Status, [Data], false, Timestamp});
         [[_, OldData, _]] ->
+            case lists:member(Data, OldData) of
+                true ->
+                    NewData = OldData;
+                _ ->
+                    NewData = OldData ++ [Data]
+            end,
             ets:insert(Table,
-                {Id, Status, [OldData, Data], Complete, Timestamp})
+                {Id, Status, NewData, Complete, Timestamp})
     end.
 
 
 %% @spec delete(Table, Id) -> null
 %% @doc  Deletes a cache record.
 delete(Table, Id) ->
-    error_logger:info_msg("~p Deleting data for ~p.~n", [self(), Id]),
+%    error_logger:info_msg("~p Deleting data for ~p.~n", [self(), Id]),
     case ets:lookup(Table, Id) of
         [] ->
             false;
