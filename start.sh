@@ -1,5 +1,6 @@
 #!/bin/sh
 cd `dirname $0`
+export WEBMACHINE_PORT=8215
 # use this set of options when run interactively (erlang will provide a shell)
 opts="-boot start_sasl -s reloader -s urlfetch"
 # use this set of options when run on production node
