@@ -94,12 +94,7 @@ store(Table, Record) ->
         [] ->
             ets:insert(Table, {Id, Status, [Data], false, Timestamp});
         [[_, OldData, _]] ->
-            case lists:member(Data, OldData) of
-                true ->
-                    NewData = OldData;
-                _ ->
-                    NewData = OldData ++ [Data]
-            end,
+            NewData = OldData ++ [Data],
             ets:insert(Table,
                 {Id, Status, NewData, Complete, Timestamp})
     end.
@@ -127,6 +122,7 @@ fetch(Table, Id) ->
         [{_, Status, Data, Complete, _}] ->
             case Complete of
                 true ->
+%                    io:format("Status: ~p, data: ~p~n", [Status, Data]),
                     {result, {Status, Data}};
                 false ->
                     {error, retry}
