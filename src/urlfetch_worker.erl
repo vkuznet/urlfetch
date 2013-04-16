@@ -4,6 +4,7 @@
 %% @spec process_request(List) -> {ok, string}
 %% @doc  Process given list of urls
 process_request(L) ->
+%    error_logger:info_msg("~p process: ~p~n", [self(), L]),
     process_request(L, []).
 process_request([H|T], Results) ->
     case H of 
@@ -39,11 +40,12 @@ parse_results([H|T], R) ->
                         true ->
                             L = R ++ parse_data(Data)
                     end,
-                    parse_results(T, L)
-%                    parse_results(T, R++parse_data(Data)++"\n")
+                    parse_results(T, L);
+                _ ->
+                    error_logger:info_msg("~p Code: ~p, Data: ~p~n", [self(), Status, Data])
             end;
         {error, not_found} ->
-            io:format("ERROR: No data~n")
+            error_logger:info_msg("~p not found~n", [self()])
     end;
 parse_results([], R) -> R.
 
