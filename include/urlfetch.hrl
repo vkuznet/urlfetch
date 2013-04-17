@@ -15,7 +15,7 @@
 -define(THROTTLE, 1).
 
 -define(EMPTY, <<"">>).
-
--define(EXPIRATION_INTERVAL, 60).
+%% how long records will leave in a cache
+-define(EXPIRATION_INTERVAL, 600).
 
 -record(cache, {id, status_code=200, data=?EMPTY, complete=false, timestamp}).
