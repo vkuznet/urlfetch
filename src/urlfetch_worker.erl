@@ -13,7 +13,8 @@ process_request(L) ->
 process_request([H|T], Results) ->
     case H of 
         {"urls", Data} ->
-            R = process_urls(string:tokens(http_uri:decode(Data), "\n"));
+%            io:format("Data: ~p~n", [Data]),
+            R = process_urls(string:tokens(Data, "\n"));
         _ ->
             R = []
     end,
