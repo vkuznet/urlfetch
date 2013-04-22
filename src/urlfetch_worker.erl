@@ -8,12 +8,10 @@
 %% @spec process_request(List) -> {ok, string}
 %% @doc  Process given list of urls
 process_request(L) ->
-%    error_logger:info_msg("~p process: ~p~n", [self(), L]),
     process_request(L, []).
 process_request([H|T], Results) ->
     case H of 
         {"urls", Data} ->
-%            io:format("Data: ~p~n", [Data]),
             R = process_urls(string:tokens(Data, "\n"));
         _ ->
             R = []
